@@ -1,7 +1,26 @@
-import Head from 'next/head'
-import RandomFox from '@/components/RandomFox'
+import Head from 'next/head';
+import { LazyImage } from '@/components/LazyImage';
+import { useState , MouseEventHandler} from 'react';
+
+interface arrayFox{
+  id:string,
+  url:string
+}
+type ImageItem = {id:string, url: string} 
+//can use interface or type, type represent the minimal representation of object
+
+const random = (): number => Math.floor(Math.random() * 123) + 1;
 
 export default function Home() {
+  const [images, setImages] = useState<ImageItem[]>([]);
+ 
+  const addFox:MouseEventHandler<HTMLButtonElement> = () => {
+      
+    const newfox:ImageItem = {id:'...', url:`https://randomfox.ca/images/${random()}.jpg`}
+    
+    setImages([...images, newfox]); //DONT REMEMBER USE SPREAD AND REST
+  }
+
   return (
     <>
       <Head>
@@ -12,7 +31,17 @@ export default function Home() {
       </Head>
       <main>
         <h1 className='text-2xl text-yellow-600'>hola mundo</h1>
-        <RandomFox />
+        <button onClick={()=> addFox() }>add new fox</button>
+        {
+          images.map(({url, id})=>( //fine destructuring of map REMEMBER
+              <div className='p-4' key={id}>
+                <LazyImage 
+                image={url} 
+                onClick={()=> console.log('pingaloca')}
+                className="rounded-xl bg-slate-400"/>
+              </div>
+          ))
+        }
       </main>
     </>
   )
