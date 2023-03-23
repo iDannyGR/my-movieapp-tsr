@@ -17,13 +17,13 @@ const LazyImage:FC<imageFox> = ({image, onLazyLoad, ...imgProps}):ReactElement =
   const [isLazyLoaded, setIsLazyLoaded] = useState(false);
 
   useEffect(() => {
-      //new observer 
+      //new observer its no observe no load the effect
     if (isLazyLoaded) {
       return;
     }
-
+//the observe no apply when not intercepting and not exist node.current = false
         const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
+          entries.forEach((entry) => { //
             if (!entry.isIntersecting || !node.current) {
               return;
             }

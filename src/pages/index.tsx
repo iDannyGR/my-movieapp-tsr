@@ -1,24 +1,30 @@
 import Head from 'next/head';
 import { LazyImage } from '@/components/LazyImage';
 import { useState , MouseEventHandler} from 'react';
+import {random} from 'lodash';//for typing @types/library name/file
+//definitely Types repo for libraries with TYPES TS
 
-interface arrayFox{
-  id:string,
-  url:string
+const myRandom = (): number => random(1, 123);
+const generateRandomId=(): string => {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+  let id = "";
+
+  for (let i = 0; i < 10; i++) {
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    id += alphabet[randomIndex];
+  }
+
+  return id;
 }
-type ImageItem = {id:string, url: string} 
-//can use interface or type, type represent the minimal representation of object
-
-const random = (): number => Math.floor(Math.random() * 123) + 1;
 
 export default function Home() {
-  const [images, setImages] = useState<ImageItem[]>([]);
+  const [images, setImages] = useState<IImageItem[]>([]);
  
   const addFox:MouseEventHandler<HTMLButtonElement> = () => {
       
-    const newfox:ImageItem = {id:'...', url:`https://randomfox.ca/images/${random()}.jpg`}
+    const newSrc:IImageItem = {id: generateRandomId(), url:`https://randomfox.ca/images/${myRandom()}.jpg`}
     
-    setImages([...images, newfox]); //DONT REMEMBER USE SPREAD AND REST
+    setImages([...images, newSrc]); //DONT REMEMBER USE SPREAD AND REST
   }
 
   return (
