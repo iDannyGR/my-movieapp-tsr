@@ -33,12 +33,14 @@ export default function Home() {
         <h1 className='text-2xl text-yellow-600'>hola mundo</h1>
         <button onClick={()=> addFox() }>add new fox</button>
         {
-          images.map(({url, id})=>( //fine destructuring of map REMEMBER
+          images.map(({url, id}, index)=>( //fine destructuring of map REMEMBER
               <div className='p-4' key={id}>
                 <LazyImage 
                 image={url} 
-                onClick={()=> console.log('pingaloca')}
-                className="rounded-xl bg-slate-400"/>
+                onLazyLoad={(img) => {
+                  console.log(`Image #${index + 1} cargada. Nodo:`, img);
+                }}
+                className="rounded-xl bg-slate-400 w-full h-full"/>
               </div>
           ))
         }
